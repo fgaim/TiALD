@@ -19,6 +19,16 @@ The dataset also includes contextual metadata such as video titles and VLM-gener
 2. **Sentiment**: 4-way (`Positive`, `Neutral`, `Negative`, `Mixed`)
 3. **Topic**: 5-way (`Political`, `Racial`, `Sexist`, `Religious`, `Other`)
 
+### Annotation Schema Overview
+
+The dataset supports multi-task modeling of abusiveness, sentiment, and topic classification.  
+A schematic overview of the dataset tasks and classes is shown below:
+
+<div style="display: flex; justify-content: space-between; gap: 20px;">
+  <img title="TiALD Annotation Schema" src="assets/tiald-schema.jpg" height=350 />
+  <img title="TiALD Class Distribution" src="assets/tiald-class-dist.png" height=350 />
+</div>
+
 ## Dataset Statistics
 
 A table summarizing the dataset splits and distributions of samples:
@@ -70,6 +80,8 @@ To assess annotation quality, a subset of 900 comments was double-annotated, exa
 |Sentiment analysis    | 0.649 | Substantial agreement |
 |Topic classification  | 0.603 | Moderate agreement |
 
+**Gold label**: Expert adjudication was used to determine the final label of the test set, enabling a gold-standard evaluation.
+
 ## Intended Usage
 
 The dataset is designed to support:
@@ -90,6 +102,29 @@ Researchers and developers should avoid using this dataset for direct moderation
 - **Respect for expression**: The dataset should not be used for automated censorship without human review.
 
 This research received IRB approval (Ref: KH2022-133) from Korea Advanced Institute of Science and Technology (KAIST) and followed all ethical data collection and annotation practices, including informed consent of annotators.
+
+## How to Load the Dataset
+
+```python
+from datasets import load_dataset
+
+dataset = load_dataset("fgaim/tigrinya-abusive-language-detection")
+print(dataset["validation"][5])  # Inspect a sample
+```
+
+## Citation
+
+If you use `TiALD` in your work, please cite:
+
+```bibtex
+@inproceedings{gaim-etal-2025-tiald,
+  title     = {TiALD: A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings},
+  author    = {Fitsum Gaim, Hoyun Song, Huije Lee, Changgeon Ko, Eui Jun Hwang, Jong C. Park},
+  year      = {2025},
+  month     = {April},
+  url       = {https://github.com/fgaim/tigrinya-abusive-language-detection}
+}
+```
 
 ## License
 
