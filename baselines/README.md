@@ -15,7 +15,7 @@ Each script has commandline options that can be show by running `python <script-
 
 Install the dependencies for the training and evaluation scripts.
 
-```
+```sh
 pip install -r requirements.txt
 ```
 
