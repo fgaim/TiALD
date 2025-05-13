@@ -1,0 +1,11 @@
+transformers[torch]~=4.51.3
+simpletransformers
+protobuf==3.20.3
+datasets
+scikit-learn
+optuna
+wandb
+torch
+numpy
+anthropic
+openai
