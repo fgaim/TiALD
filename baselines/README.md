@@ -4,12 +4,13 @@ The training and inference code for the baseline approaches presented in the pap
 
 1. Single-task Fine-tuned Models
    - Entry script: `train_single_task.py`
-2. Multi-taskk Fine-tuned Models
+2. Multi-task Fine-tuned Models
    - Entry script: `train_joint_tasks.py`
 3. Evaluating LLMs in zero-shot and few-shot settings
    - Entry script: `run_llm_eval.py`
+   - Data preparation: `prepare_data.py`
 
-Each script has commandline options that can be show by running `python <script-name> --help`.
+Each script has commandline options that can be shown by running `python <script-name> --help`.
 
 ## Install Dependencies
 
@@ -66,3 +67,38 @@ For the above example, we can use the below command to compute metrics, which wi
 ```sh
 python compute_tiald_metrics.py --append_metrics --prediction_file "models/tiroberta-base_abusiveness/predictions_test.json"
 ```
+
+## LLM Evaluation
+
+The LLM evaluation script (`run_llm_eval.py`) loads the TiALD dataset directly from Hugging Face Hub, so no data preparation is needed. Available options:
+
+- `--model`: `gpt_4o`, `sonnet`, `llama`, `gemma`
+- `--task`: `abusiveness`, `sentiment`, `topic`
+- `--setting`: `zero`, `few`, `zero_title_desc`, `few_title_desc`
+- `--run`: Run number (1, 2, etc.) for averaging results
+- `--todo`: `gen` (generate predictions and evaluate) or `eval` (only evaluate existing predictions)
+
+### Running Individual Experiments
+
+To evaluate a specific LLM on a task:
+
+```sh
+# Example: Evaluate GPT-4o on sentiment task with zero-shot prompting
+python run_llm_eval.py \
+    --api_key YOUR_API_KEY \
+    --model gpt_4o \
+    --task sentiment \
+    --setting zero \
+    --run 1 \
+    --todo gen
+```
+
+### Output Files
+
+Predictions are stored efficiently:
+
+- **One prediction file per model+setting+run**: `predictions_<model>_<setting>_<run>.json`
+  - Contains all tasks: `abusiveness_predictions`, `sentiment_predictions`, `topic_predictions`
+  - Script skips existing predictions when adding new tasks
+- **One eval file per model+setting+task+run**: `eval_<model>_<setting>_<task>_<run>.json`
+  - Contains accuracy, macro F1, per-class F1 scores
