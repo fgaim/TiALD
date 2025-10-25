@@ -1,45 +1,44 @@
 # Tigrinya Abusive Language Detection (TiALD) Dataset
 
-**Tigrinya Abusive Language Dataset (TiALD)** is a large-scale, multi-task benchmark dataset for abusive language detection in the Tigrinya language. It consists of **13,717 YouTube comments** annotated for **abusiveness**, **sentiment**, and **topic** tasks. The dataset includes comments written in both the **Ge’ez script** and prevalent non-standard Latin **transliterations** to mirror real-world usage.
+**Tigrinya Abusive Language Dataset (TiALD)** is a large-scale, multi-task benchmark dataset for abusive language detection in the Tigrinya language. It consists of **13,717 YouTube comments** annotated for **abusiveness**, **sentiment**, and **topic** tasks. The dataset includes comments written in both the **Ge’ez script** and prevalent non-standard Latin-based **transliterations** to mirror real-world usage.
 
 The dataset also includes contextual metadata such as video titles and VLM-generated and LLM-enhanced descriptions of the corresponding video content, enabling context-aware modeling.
 
-> ⚠️ The dataset contains explicit, obscene, and potentially hateful language. It should be used for research purposes only. ⚠️
+⚠️ **The dataset contains explicit, obscene, and hateful language. It should be used for research purposes only.** ⚠️
 
-This work accompanies the paper ["A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings"](https://arxiv.org/abs/2505.12116).
+This work accompanies the paper ["A Multi-Task Benchmark for Abusive Language Detection in Low-Resource Settings"](https://arxiv.org/abs/2505.12116), accepted at the **NeurIPS 2025** conference in the Datasets & Benchmarks Track, San Diego, December (2-7), 2025.
 
-**Outline**
+**Outline:**
 
-- [Tigrinya Abusive Language Detection (TiALD) Dataset](#tigrinya-abusive-language-detection-tiald-dataset)
-  - [Dataset Overview](#dataset-overview)
-    - [Tasks and Annotation Schema](#tasks-and-annotation-schema)
-    - [How to Access the TiALD Dataset](#how-to-access-the-tiald-dataset)
-  - [Baseline Models and Results](#baseline-models-and-results)
-    - [Trained Baseline Models](#trained-baseline-models)
-    - [Code for Baseline Models](#code-for-baseline-models)
-    - [1. Performance of Fine-tuned Monolingual and Multilingual Models](#1-performance-of-fine-tuned-monolingual-and-multilingual-models)
-    - [2. Performance of Large Language Models on the Abusiveness Detection Task](#2-performance-of-large-language-models-on-the-abusiveness-detection-task)
-    - [Baseline Models Prediction Files](#baseline-models-prediction-files)
-  - [Dataset Details](#dataset-details)
-    - [Dataset Statistics](#dataset-statistics)
-    - [Dataset Features](#dataset-features)
-    - [Inter-Annotator Agreement (IAA)](#inter-annotator-agreement-iaa)
-    - [Croissant Metadata for TiALD Dataset](#croissant-metadata-for-tiald-dataset)
-  - [Usage of TiALD Dataset](#usage-of-tiald-dataset)
-    - [Intended Usage](#intended-usage)
-    - [Ethical Considerations](#ethical-considerations)
-  - [Evaluation and Computing Metrics](#evaluation-and-computing-metrics)
-    - [Model Predictions File Format](#model-predictions-file-format)
-    - [Computing Metrics](#computing-metrics)
-  - [Citation](#citation)
-  - [License](#license)
+- [Dataset Overview](#dataset-overview)
+  - [Tasks and Annotation Schema](#tasks-and-annotation-schema)
+  - [How to access the TiALD Dataset](#how-to-access-the-tiald-dataset)
+- [Baseline Models and Results](#baseline-models-and-results)
+  - [Trained Baseline Models](#trained-baseline-models)
+  - [Code for Baseline Models](#code-for-baseline-models)
+  - [1. Main Results: Performance of Fine-tuned and Prompted Models](#1-main-results-performance-of-fine-tuned-and-prompted-models)
+  - [2. Performance of Models with Video Title as Context](#2-performance-of-models-with-video-title-as-context)
+  - [3. Performance of LLMs on Abusiveness Detection with Cross-Modality Context](#3-performance-of-llms-on-abusiveness-detection-with-cross-modality-context)
+  - [Baseline Models Prediction Files](#baseline-models-prediction-files)
+- [Dataset Details](#dataset-details)
+  - [Dataset Statistics](#dataset-statistics)
+  - [Dataset Features](#dataset-features)
+  - [Inter-Annotator Agreement (IAA)](#inter-annotator-agreement-iaa)
+  - [Croissant Metadata for TiALD Dataset](#croissant-metadata-for-tiald-dataset)
+- [Intended Usage of TiALD Dataset](#intended-usage-of-tiald-dataset)
+  - [Ethical Considerations](#ethical-considerations)
+- [Evaluation and Computing Metrics](#evaluation-and-computing-metrics)
+  - [Model Predictions File Format](#model-predictions-file-format)
+  - [Computing Metrics](#computing-metrics)
+- [Citation](#citation)
+- [License](#license)
 
 ## Dataset Overview
 
-- **Source**: YouTube comments from 51 popular channels in the Tigrinya-speaking community.
+- **Data Source**: YouTube comments from 51 popular channels in the Tigrinya-speaking community.
 - **Scope**: 13,717 human-annotated comments from 7,373 videos with over 1.2 billion cumulative views at the time of collection.
 - **Sampling**: Comments selected using an embedding-based semantic expansion strategy from an initial pool of ~4.1 million comments across ~34.5k videos.
-- **Paper**: For methodology, baseline results, and task formulation, see the associated paper.
+- For data construction methodology, baseline results, and task formulation, see the associated paper.
 
 ### Tasks and Annotation Schema
 
@@ -58,7 +57,7 @@ A schematic overview of the dataset tasks and classes is shown below:
 
 ### How to Access the TiALD Dataset
 
-A stable version of TiALD dataset is made available on 🤗 Hugging Face Hub.  
+A stable version of TiALD dataset is made available on 🤗 Hugging Face Hub.
 
 You can head over to: <https://huggingface.co/datasets/fgaim/tigrinya-abusive-language-detection>
 
@@ -86,38 +85,73 @@ The training and inference code for the three baseline approaches discussed in t
 
 The following tables show the performances of the baseline models reported in the paper:
 
-### 1. Performance of Fine-tuned Monolingual and Multilingual Models
+### 1. Main Results: Performance of Fine-tuned and Prompted Models
 
-| Model |  | Abusiveness |  | Sentiment |  | Topic | TiALD Score |
-|:---|---:|---:|---:|---:|---:|---:|---:|
-|  | **Acc** | **F1** | **Acc** | **F1** | **Acc** | **F1** | **Macro F1** |
-| **Single-task Models** |  |  |  |  |  |  |  |
-| TiELECTRA-small | 82.33 | 82.33 | 66.56 | 42.39 | 51.44 | 26.90 | 50.54 |
-| TiRoBERTa-base | **_86.67_** | **_86.67_** | 66.67 | 52.82 | **_62.00_** | _54.23_ | _64.57_ |
-| AfriBERTa-base | 83.44 | 83.42 | 66.00 | 50.81 | 61.22 | 53.20 | 62.48 |
-| Afro-XLMR-Large-76L | 85.22 | 85.20 | **_68.56_** | **_54.94_** | 61.00 | 51.42 | 63.86 |
-| XLM-RoBERTa-base | 81.11 | 81.08 | 59.33 | 30.17 | 58.44 | 43.97 | 51.74 |
-| **Multi-task Joint Learning** |  |  |  |  |  |  |  |
-| TiELECTRA-small | 84.22 | 84.21 | 67.33 | 43.44 | 51.00 | 29.27 | 52.30 |
-| TiRoBERTa-base | _86.11_ | _86.11_ | 65.33 | 53.41 | _61.56_ | **_54.91_** | **_64.81_** |
-| AfriBERTa-base | 83.67 | 83.66 | 66.89 | 50.19 | 61.55 | 53.49 | 62.45 |
-| Afro-XLMR-Large-76L | 85.44 | 85.44 | **_68.56_** | _54.50_ | 60.67 | 52.46 | 64.13 |
-| XLM-RoBERTa-base | 79.89 | 79.87 | 66.67 | 45.40 | 54.22 | 35.50 | 53.59 |
+| Model | Abusiveness | Sentiment | Topic | TiALD Score |
+|:---|---:|---:|---:|---:|
+| **Fine-tuned Single-task Models** | | | | |
+| TiELECTRA-small | 82.33  | 42.39  | 26.90  | 50.54  |
+| TiRoBERTa-base | ***86.67***  | 52.82  | *54.23*  | *64.57*  |
+| AfriBERTa-base | 83.42  | 50.81  | 53.20  | 62.48  |
+| Afro-XLMR-Large-76L | 85.20  | ***54.94***  | 51.42  | 63.86  |
+| XLM-RoBERTa-base | 81.08  | 30.17  | 43.97  | 51.74  |
+| **Fine-tuned Multi-task Models** | | | | |
+| TiELECTRA-small | 84.21  | 43.44  | 29.27  | 52.30  |
+| TiRoBERTa-base | *86.11*  | 53.41  | ***54.91***  | ***64.81***  |
+| AfriBERTa-base | 83.66  | 50.19  | 53.49  | 62.45  |
+| Afro-XLMR-Large-76L | 85.44  | *54.50*  | 52.46  | 64.13  |
+| XLM-RoBERTa-base | 79.87  | 45.40  | 35.50  | 53.59  |
+| **Zero-shot Prompted LLMs** | | | | |
+| GPT-4o | *71.05*  | 20.55  | 26.25  | 39.28  |
+| Claude Sonnet 3.7 | 59.20  | 22.64  | 25.25  | 35.70  |
+| Gemma-3 4B | 59.35  | *29.47*  | *35.24*  | *41.35*  |
+| LLaMA-3.2 3B | 49.98  | 25.30  | 16.55  | 30.61  |
+| **Few-shot Prompted LLMs** | | | | |
+| GPT-4o | 72.06  | 21.88  | 27.56  | 40.50  |
+| Claude Sonnet 3.7 | *79.31*  | 23.39  | 27.92  | *43.54*  |
+| Gemma-3 4B | 58.37  | *30.46*  | *39.49*  | 42.78  |
+| LLaMA-3.2 3B | 45.65  | 19.94  | 21.68  | 29.09  |
 
-_Models are trained and evaluated with comment text only. The TiALD Score is the average of the macro F1 scores across the three tasks. The task-level highest scores for each approach are italicized, and the overall best scores are in bold._
+*Performance of fine-tuned encoder models (single and multi-task) and prompted generative LLMs (zero-shot and few-shot) evaluated on user comments across all three tasks. The TiALD Score is the average macro F1 across the three tasks. Overall task-level best scores are in **bold**; category-best scores are *italicized*.*
 
-### 2. Performance of Large Language Models on the Abusiveness Detection Task
+### 2. Performance of Models with Video Title as Context
 
-| Model | | | Comment Only |  |  |  |Video Context + Comment  |  |
-|:---|---:|---:|---:|---:|---:|---:|---:|---:|
-|  | | **Zero-shot**  |  | **Few-shot** |  | **Zero-shot** |  | **Few-shot** |
-|  | **Acc** | **F1** | **Acc** | **F1** | **Acc** | **F1** | **Acc** | **F1** |
-| GPT-4o | **71.50** | **71.05** | 72.17 | 72.06 | **74.72** | **74.70** | 74.67 | 74.53 |
-| Claude Sonnet 3.7 | 63.89 | 59.20 | **79.33** | **79.31** | 73.00 | 72.02 | **78.56** | **78.21** |
-| Gemma-3 4B | 61.72 | 61.13 | 54.78 | 49.33 | 56.83 | 53.45 | 54.61 | 47.13 |
-| LLaMA-3.2 3B† | 50.83 | 36.93 | 19.28 | 18.91 | 50.28 | 48.26 | 19.06 | 18.79 |
+| Model | Abusiveness | Sentiment | Topic | TiALD Score |
+|:---|---:|---:|---:|---:|
+| **Fine-tuned Single-task Models** | | | | |
+| TiELECTRA-small | 81.67  | 39.40  | 27.81  | 49.62  |
+| TiRoBERTa-base | ***86.17***  | ***54.97***  | ***54.55***  | ***65.23***  |
+| AfriBERTa-base | 82.44  | 51.33  | 52.10  | 61.96  |
+| Afro-XLMR-Large-76L | 84.20  | 52.64  | 54.11  | 63.65  |
+| XLM-RoBERTa-base | 75.09  | 43.47  | 41.60  | 53.39  |
+| **Zero-shot Prompted LLMs** | | | | |
+| GPT-4o | *75.59*  | 41.03  | *55.52*  | *57.38*  |
+| Claude Sonnet 3.7 | 67.64  | *44.39*  | 50.10  | 54.05  |
+| Gemma-3 4B | 58.41  | 29.27  | 34.44  | 40.71  |
+| LLaMA-3.2 3B | 44.13  | 21.85  | 15.91  | 27.30  |
+| **Few-shot Prompted LLMs** | | | | |
+| GPT-4o | 75.89  | 45.50  | 58.59  | 59.99  |
+| Claude Sonnet 3.7 | *80.29*  | *48.01*  | *59.45*  | *62.58*  |
+| Gemma-3 4B | 59.39  | 30.43  | 39.60  | 43.14  |
+| LLaMA-3.2 3B | 48.29  | 20.19  | 20.20  | 29.56  |
 
-_†LLaMA-3.2 3B produced invalid responses for over 61% of queries in both few-shot settings, mainly due to its limited Tigrinya text understanding._
+*Performance of models with video title as context. Fine-tuned models were trained on concatenation of user comment and video title. LLMs were prompted with both comment and video title. Overall task-level best scores are in **bold**; category-best scores are *italicized*.*
+
+### 3. Performance of LLMs on Abusiveness Detection with Cross-Modality Context
+
+| Model | Comment Only | | Video Title + Comment | |
+|:---|---:|---:|---:|---:|
+| | **Zero-shot** | **Few-shot** | **Zero-shot** | **Few-shot** |
+| **Closed Frontier Models** | | | | |
+| GPT-4o | ***71.05***  | 72.06  | ***75.59***  | 75.89 |
+| Claude Sonnet 3.7 | 59.20  | ***79.31***  | 67.64  | ***80.29*** |
+| **Open-weight Models** | | | | |
+| Gemma-3 4B | *59.35*  | *58.37*  | *58.41*  | *59.39* |
+| LLaMA-3.2 3B | 49.98  | 45.65  | 44.13  | 48.29 |
+
+*Performance of LLMs on Abusiveness Detection with Cross-Modality Contextual Information: user `comment` augmented with `video_title` and auto-generated `video_description`. Best scores for each prompting approach are in **bold**; highest scores within model category are *italicized*.*
+
+*†LLaMA-3.2 3B produced invalid responses for over 61% of queries in both few-shot settings, mainly due to its limited Tigrinya text understanding.*
 
 ### Baseline Models Prediction Files
 
@@ -171,7 +205,7 @@ To assess annotation quality, a subset of 900 comments was double-annotated, exa
 **Aggregate IAA Scores**:
 
 | Task | Cohen's Kappa | Remark |
-|------|-------|--------|
+|:---|:---|:---|
 |Abusiveness detection | 0.758 | Substantial agreement |
 |Sentiment analysis    | 0.649 | Substantial agreement |
 |Topic classification  | 0.603 | Moderate agreement |
@@ -184,14 +218,12 @@ Croissant is an open, standardized metadata format designed to describe machine 
 
 The Croissant metadata for TiALD dataset can be found at [TiALD.Croissant.json](./data/TiALD.Croissant.json).
 
-## Usage of TiALD Dataset
+## Intended Usage of TiALD Dataset
 
-### Intended Usage
-
-The dataset is designed to support:
+The dataset is solely designed to support:
 
 - Research in abusive language detection in low-resource languages
-- Context-aware abuse, sentiment, and topic modeling
+- Context-aware abusiveness, sentiment, and topic modeling
 - Multi-task and transfer learning with digraphic scripts
 - Evaluation of multilingual and fine-tuned language models
 
@@ -249,7 +281,7 @@ Then run the script as follows:
 ```sh
 python compute_tiald_metrics.py \
   --prediction_file <path-to-model-predictions.json> \
-  [--output_file <output-file-to-save-results.json> \]
+  [--output_file <output-file-to-save-results.json>]
   [--append_metrics <append metrics to the prediction file>]
 ```
 
@@ -259,9 +291,8 @@ The script automatically loads the TiALD dataset and computes the following metr
 - Macro F1 scores for each task
 - Per-class precision, recall, and F1 scores
 
-The summary of results is logged to the terminal and can optionally be saved to a detailed JSON file using the `--ooutput_file` flag.
-
-> The aggregate `TiALD Score` reported in the paper is an arthmetic mean of the task-level macro F1 scores.
+The summary of results is logged to the terminal and can optionally be saved to a detailed JSON file using the `--output_file` flag.
+The aggregate `TiALD Score` reported in the paper is an arthmetic mean of the task-level macro F1 scores.
 
 ## Citation
 
